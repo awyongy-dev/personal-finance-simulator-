@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Planning Priority Paradigm</title>
+    <!-- Tailwind CSS for high-contrast energetic green styling -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        .active-glow {
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex items-center justify-center p-4 md:p-8">
+
+    <div class="max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <span class="text-emerald-400 font-semibold tracking-wider uppercase text-sm block mb-2">Interactive Financial Paradigm</span>
+            <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight mb-3">You’re Not Bad at Saving.</h1>
+            <p class="text-slate-400 text-lg md:text-xl">You just have too many goals competing for the <span class="text-emerald-400 font-bold underline decoration-2">same dollar</span>.</p>
+        </div>
+
+        <!-- Interactive Toggle Controls for Both Paradigms -->
+        <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto mb-10 bg-slate-950 p-2 rounded-2xl border border-slate-800">
+            <button id="btn-trap" onclick="switchParadigm('trap')" class="py-3 px-4 rounded-xl font-bold transition-all duration-300 text-center cursor-pointer bg-emerald-500 text-slate-950 shadow-md">
+                ⚠️ 1. Split Focus Trap
+            </button>
+            <button id="btn-sequential" onclick="switchParadigm('sequential')" class="py-3 px-4 rounded-xl font-bold transition-all duration-300 text-center cursor-pointer text-slate-400 hover:text-white">
+                ⚡ 2. Sequential Paradigm
+            </button>
+        </div>
+
+        <!-- Simulation Display Arena -->
+        <div class="bg-slate-950 rounded-2xl border border-slate-800 p-6 min-h-[400px] flex flex-col justify-between transition-all duration-500">
+            
+            <!-- Paradigm Context Header -->
+            <div class="mb-6">
+                <h3 id="paradigm-title" class="text-xl md:text-2xl font-bold text-amber-500 mb-2">The Fragmented Squeeze</h3>
+                <p id="paradigm-desc" class="text-slate-400 text-sm md:text-base">Trying to fund an emergency fund, a home, travel, parents, investing, and retirement all at the exact same time... progress slows to a crawl.</p>
+            </div>
+
+            <!-- Dynamic Bar Progress Grid -->
+            <div id="paradigm-container" class="space-y-4 my-auto">
+                <!-- Visual progress elements are injected here by JavaScript -->
+            </div>
+
+            <!-- Key Mindset Shift Banner -->
+            <div class="mt-8 pt-6 border-t border-slate-800 text-center">
+                <span class="text-xs uppercase tracking-widest text-slate-500 font-bold block mb-1">The Critical Shift</span>
+                <p id="paradigm-takeaway" class="text-slate-300 italic font-medium text-sm md:text-base">
+                    "Stop asking 'How do I save more?' That leads to restriction and guilt."
+                </p>
+            </div>
+        </div>
+
+        <!-- Static Vision Block -->
+        <div class="mt-8 bg-gradient-to-r from-emerald-950 to-slate-900 border border-emerald-900/40 rounded-2xl p-4 md:p-6 text-center">
+            <p class="text-emerald-300 font-bold text-base md:text-lg leading-relaxed">
+                "You don’t have to choose between living today and preparing for tomorrow. <br class="hidden md:inline">You just need to make sure today doesn’t cost you your future."
+            </p>
+        </div>
+    </div>
+
+    <!-- Logic Engine mapping both paradigms -->
+    <script>
+        const financialGoals = [
+            { id: 1, name: "🚨 3-Month Emergency Fund", trapPct: "16%", seqPct: "100%", trapStatus: "\$0.16 (Stalled)", seqStatus: "\$1.00 (FULLY FUNDED 🚀)", color: "bg-emerald-400" },
+            { id: 2, name: "🏠 Home Downpayment", trapPct: "16%", seqPct: "0%", trapStatus: "\$0.16 (Stalled)", seqStatus: "Next Priority (Queue #2)", color: "bg-emerald-500" },
+            { id: 3, name: "✈️ Travel & Lifestyle", trapPct: "16%", seqPct: "0%", trapStatus: "\$0.16 (Stalled)", seqStatus: "On Hold (Queue #3)", color: "bg-emerald-600" },
+            { id: 4, name: "👪 Supporting Parents", trapPct: "16%", seqPct: "0%", trapStatus: "\$0.16 (Stalled)", seqStatus: "On Hold (Queue #4)", color: "bg-emerald-700" },
+            { id: 5, name: "📈 Wealth Investments", trapPct: "16%", seqPct: "0%", trapStatus: "\$0.16 (Stalled)", seqStatus: "On Hold (Queue #5)", color: "bg-emerald-800" },
+            { id: 6, name: "👵 Long-term Retirement", trapPct: "16%", seqPct: "0%", trapStatus: "\$0.16 (Stalled)", seqStatus: "On Hold (Queue #6)", color: "bg-emerald-900" }
+        ];
+
+        function renderParadigm(type) {
+            const container = document.getElementById('paradigm-container');
+            container.innerHTML = '';
+
+            financialGoals.forEach(goal => {
+                const isTrapMode = type === 'trap';
+                const currentWidth = isTrapMode ? goal.trapPct : goal.seqPct;
+                const currentStatus = isTrapMode ? goal.trapStatus : goal.seqStatus;
+                
+                const isEmergencyPillar = goal.id === 1;
+                
+                // Add stylized focus effects for sequential mode execution
+                const highlightBorder = (!isTrapMode && isEmergencyPillar) ? 'active-glow border-emerald-400/60' : 'border-transparent';
+                const containerDimming = (!isTrapMode && !isEmergencyPillar) ? 'opacity-35 scale-[0.99]' : 'opacity-100 scale-100';
+
+                const goalMarkup = `
+                    <div class="transition-all duration-500 ease-in-out ${containerDimming}">
+                        <div class="flex justify-between items-center text-xs md:text-sm font-semibold mb-1 text-slate-300">
+                            <span>${goal.name}</span>
+                            <span class="${!isTrapMode && isEmergencyPillar ? 'text-emerald-400 font-bold' : 'text-slate-400'}">${currentStatus}</span>
+                        </div>
+                        <div class="w-full bg-slate-900/80 border ${highlightBorder} rounded-full h-4 overflow-hidden p-[2px] transition-all duration-300">
+                            <div class="${goal.color} h-full rounded-full transition-all duration-700 ease-out" style="width: ${currentWidth}"></div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', goalMarkup);
+            });
+        }
+
+        function switchParadigm(selectedMode) {
+            const trapButton = document.getElementById('btn-trap');
+            const seqButton = document.getElementById('btn-sequential');
+            const headline = document.getElementById('paradigm-title');
+            const explanation = document.getElementById('paradigm-desc');
+            const coreQuote = document.getElementById('paradigm-takeaway');
+
+            if (selectedMode === 'trap') {
+                trapButton.className = "py-3 px-4 rounded-xl font-bold transition-all duration-300 text-center cursor-pointer bg-emerald-500 text-slate-950 shadow-md";
+                seqButton.className = "py-3 px-4 rounded-xl font-bold transition-all duration-300 text-center cursor-pointer text-slate-400 hover:text-white";
+                
+                headline.textContent = "The Fragmented Squeeze";
+                headline.className = "text-xl md:text-2xl font-bold text-amber-500 mb-2";
+                explanation.textContent = "Trying to fund an emergency fund, a home, travel, parents, investing, and retirement all at the exact same time... progress slows to a crawl.";
+                coreQuote.textContent = `"Stop asking 'How do I save more?' That leads to restriction and guilt."`;
+            } else {
+                seqButton.className = "py-3 px-4 rounded-xl font-bold transition-all duration-300 text-center cursor-pointer bg-emerald-500 text-slate-950 shadow-md";
+                trapButton.className = "py-3 px-4 rounded-xl font-bold transition-all duration-300 text-center cursor-pointer text-slate-400 hover:text-white";
+                
+                headline.textContent = "The Paradigm: Sequential Milestones";
+                headline.className = "text-xl md:text-2xl font-bold text-emerald-400 mb-2";
+                explanation.textContent = "Directing 100% of your financial capacity toward locking down a 3-Month Emergency Fund creates an ironclad foundation. Once completed, your entire cash flow engine shifts to item #2 with total focus.";
+                coreQuote.textContent = `"Start asking 'What should come first?' Sequential priorities build immediate real-world momentum."`;
+            }
+
+            renderParadigm(selectedMode);
+        }
+
+        // Initialize application layout configuration on load
+        renderParadigm('trap');
+    </script>
+</body>
+</html>
